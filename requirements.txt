@@ -1,5 +1,9 @@
-pandas
+
 dash
 dash[testing]
+pandas
+pillow
 selenium
 webdriver-manager
+wordcloud
+yake

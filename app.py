@@ -1,66 +1,130 @@
+from dash import Dash, dcc, html, dash_table, Output, Input
 import pandas as pd
-from dash import Dash, html, dcc,  Output, Input,dash_table
-import plotly.express as px
+from wordcloud import WordCloud
+import base64
+
+# Sample DataFrame for displaying results (you can replace this with your actual extracted keywords/phrases)
+data = {
+    'Keyword/Phrase': ['keyword1', 'keyword2', 'keyword3'],
+    'Value': [0.8, 0.7, 0.6]
+}
+df = pd.DataFrame(data)
+
+# Sample word cloud image (you can replace this with your actual word cloud image)
+wordcloud_image = 'cloud.png'
 
 app = Dash(__name__)
 
-df = pd.read_csv("./data/preprocessed.csv")
+app.layout = html.Div([
+    html.H1("Keyword Extractor"),
 
-fig = px.line(df, 'date', 'sales')
+    dcc.Upload(
+        id='upload-data',
+        children=html.Div([
+            'Drag and Drop or ',
+            html.A('Select Files')
+        ]),
+        style={
+            'width': '50%',
+            'height': '100px',
+            'lineHeight': '100px',
+            'borderWidth': '1px',
+            'borderStyle': 'dashed',
+            'borderRadius': '5px',
+            'textAlign': 'center',
+            'margin': '20px'
+        },
+        multiple=False
+    ),
 
-app.layout = html.Div(
-    style={'font-family': 'Arial, sans-serif', 'margin': '20px'},
-    children=[
-        html.H1(
-            id='header',
-            children='Date vs Sales',
-            style={'text-align': 'center', 'margin-bottom': '20px'}
-        ),
+    html.Div(id='output-data', style={'margin': '20px'}),
 
-        html.Div(
-            children=[
-                dcc.Graph(
-                    id='graph',
-                    figure=px.line(df, 'date', 'sales')
-                )
-            ],
-            style={'margin-bottom': '30px'}
-        ),
+    dcc.Graph(
+        id='word-cloud',
+        figure={
+            'data': [{
+                'type': 'scatter',
+                'x': [0, 1],
+                'y': [0, 1],
+                'mode': 'text',
+                'text': ['Sample', 'WordCloud'],
+                'textfont': {
+                    'size': 20,
+                    'color': '#1f77b4'
+                }
+            }],
+            'layout': {
+                'xaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
+                'yaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
+                'height': 400,
+                'margin': {'l': 0, 'r': 0, 't': 0, 'b': 0},
+                'plot_bgcolor': '#fff',
+                'paper_bgcolor': '#fff'
+            }
+        },
+        style={'margin': '20px'}
+    )
+])
 
-        html.Div(
-            children=[
-                html.P('Choose which region you would like to view:', style={'margin-bottom': '10px'}),
-                dcc.RadioItems(
-                    id='radio-buttons',
-                    options=[
-                        {'label': 'North', 'value': 'north'},
-                        {'label': 'East', 'value': 'east'},
-                        {'label': 'South', 'value': 'south'},
-                        {'label': 'West', 'value': 'west'},
-                        {'label': "All", 'value': "None"}
-                    ],
-                    value=None,
-                    labelStyle={'display': 'block', 'margin-right': '10px'}
-                )
-            ],
-            style={'margin-bottom': '30px'}
-        )
-    ]
-)
+def parse_contents(contents, filename):
+    # Process the uploaded file and extract keywords/phrases (you can implement your extraction logic here)
+    # For this example, we'll just return the sample DataFrame.
+    return df
 
-@app.callback(
-    Output('graph', 'figure'),
-    [Input('radio-buttons', 'value')]
-)
+@app.callback(Output('output-data', 'children'),
+              Output('word-cloud', 'figure'),
+              Input('upload-data', 'contents'),
+              Input('upload-data', 'filename'))
+def update_output(contents, filename):
+    if contents is not None:
+        df = parse_contents(contents, filename)
+        # Generate word cloud image (you can use your own word cloud generation logic here)
+        with open(wordcloud_image, 'rb') as f:
+            encoded_image = base64.b64encode(f.read()).decode()
+        word_cloud_figure = {
+            'data': [{
+                'type': 'scatter',
+                'x': [0, 1],
+                'y': [0, 1],
+                'mode': 'text',
+                'text': ['Sample', 'WordCloud'],
+                'textfont': {
+                    'size': 20,
+                    'color': '#1f77b4'
+                }
+            }],
+            'layout': {
+                'xaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
+                'yaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
+                'height': 400,
+                'margin': {'l': 0, 'r': 0, 't': 0, 'b': 0},
+                'images': [{
+                    'source': 'data:image/png;base64,{}'.format(encoded_image),
+                    'xref': 'x',
+                    'yref': 'y',
+                    'x': 0.5,
+                    'y': 0.5,
+                    'sizex': 0.8,
+                    'sizey': 0.8,
+                    'sizing': 'stretch',
+                    'opacity': 0.8,
+                    'layer': 'above'
+                }],
+                'plot_bgcolor': '#fff',
+                'paper_bgcolor': '#fff'
+            }
+        }
+        return [
+            html.H3("Keywords/Phrases and Values"),
+            dash_table.DataTable(
+                id='table',
+                columns=[{'name': col, 'id': col} for col in df.columns],
+                data=df.to_dict('records')
+            ),
+            word_cloud_figure
+        ]
+    return '', {}
 
-def update_graph(selected_region):
-    if selected_region == 'None':
-        fig = px.line(df, 'date', 'sales')
-    else:
-        filtered_df = df[df['region']==selected_region]
-        fig = px.line(filtered_df, 'date', 'sales')
-
-    return fig
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run_server(debug=True)
