@@ -1,129 +1,84 @@
-from dash import Dash, dcc, html, dash_table, Output, Input
+import io
+
+from dash import Dash, html, dcc, Input, Output, dash_table
+import dash_bootstrap_components as dbc
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 from wordcloud import WordCloud
 import base64
+import keyword_extraction
 
-# Sample DataFrame for displaying results (you can replace this with your actual extracted keywords/phrases)
-data = {
-    'Keyword/Phrase': ['keyword1', 'keyword2', 'keyword3'],
-    'Value': [0.8, 0.7, 0.6]
-}
-df = pd.DataFrame(data)
+app = Dash(__name__, external_stylesheets=[dbc.themes.ZEPHYR])
 
-# Sample word cloud image (you can replace this with your actual word cloud image)
-wordcloud_image = 'cloud.png'
+return_table = dbc.Table(
 
-app = Dash(__name__)
+)
 
-app.layout = html.Div([
-    html.H1("Keyword Extractor"),
+inputs = dbc.Card(
+    [
+        # number of keywords
+        html.Div(
+            [
+                dbc.Label("Top N Keywords"),
+                dbc.Input(
+                    id='top',
+                    value='How many keywords',
+                    type="number"
+                )
+            ]
+        ),
+        # job description
+        html.Div(
+            [
+                dbc.Label("Job Description"),
+                dbc.Textarea(
+                    id='text',
+                    value='Enter your text here...',
+                    style={"height": "200px"}
+                )
+            ]
+        )
+    ],
+    body=True,
+)
 
-    dcc.Upload(
-        id='upload-data',
-        children=html.Div([
-            'Drag and Drop or ',
-            html.A('Select Files')
-        ]),
-        style={
-            'width': '50%',
-            'height': '100px',
-            'lineHeight': '100px',
-            'borderWidth': '1px',
-            'borderStyle': 'dashed',
-            'borderRadius': '5px',
-            'textAlign': 'center',
-            'margin': '20px'
-        },
-        multiple=False
-    ),
+app.layout = dbc.Container(
+    [
+        html.H1("Keyword Extraction from Job Description"),
+        html.Hr(),
+        dbc.Row(
+            [
+                dbc.Col(inputs, md=4),
+                dbc.Col(dcc.Graph(id="frequency-graph"), md=8),
+            ],
+            align="center",
+        ),
+    ],
+    fluid=True,
+)
 
-    html.Div(id='output-data', style={'margin': '20px'}),
+@app.callback(
+    Output("frequency-graph", "figure"),
+    [
+        Input("top", "value"),
+        Input("text", "value"),
+    ],
+)
+def make_graph(text, top):
 
-    dcc.Graph(
-        id='word-cloud',
-        figure={
-            'data': [{
-                'type': 'scatter',
-                'x': [0, 1],
-                'y': [0, 1],
-                'mode': 'text',
-                'text': ['Sample', 'WordCloud'],
-                'textfont': {
-                    'size': 20,
-                    'color': '#1f77b4'
-                }
-            }],
-            'layout': {
-                'xaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
-                'yaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
-                'height': 400,
-                'margin': {'l': 0, 'r': 0, 't': 0, 'b': 0},
-                'plot_bgcolor': '#fff',
-                'paper_bgcolor': '#fff'
-            }
-        },
-        style={'margin': '20px'}
-    )
-])
+    if text and top:
+        df = keyword_extraction.get_keywords(text,top)
 
-def parse_contents(contents, filename):
-    # Process the uploaded file and extract keywords/phrases (you can implement your extraction logic here)
-    # For this example, we'll just return the sample DataFrame.
-    return df
+        data = go.bar(df, x='keyword', y='count')
 
-@app.callback(Output('output-data', 'children'),
-              Output('word-cloud', 'figure'),
-              Input('upload-data', 'contents'),
-              Input('upload-data', 'filename'))
-def update_output(contents, filename):
-    if contents is not None:
-        df = parse_contents(contents, filename)
-        # Generate word cloud image (you can use your own word cloud generation logic here)
-        with open(wordcloud_image, 'rb') as f:
-            encoded_image = base64.b64encode(f.read()).decode()
-        word_cloud_figure = {
-            'data': [{
-                'type': 'scatter',
-                'x': [0, 1],
-                'y': [0, 1],
-                'mode': 'text',
-                'text': ['Sample', 'WordCloud'],
-                'textfont': {
-                    'size': 20,
-                    'color': '#1f77b4'
-                }
-            }],
-            'layout': {
-                'xaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
-                'yaxis': {'showgrid': False, 'showticklabels': False, 'zeroline': False},
-                'height': 400,
-                'margin': {'l': 0, 'r': 0, 't': 0, 'b': 0},
-                'images': [{
-                    'source': 'data:image/png;base64,{}'.format(encoded_image),
-                    'xref': 'x',
-                    'yref': 'y',
-                    'x': 0.5,
-                    'y': 0.5,
-                    'sizex': 0.8,
-                    'sizey': 0.8,
-                    'sizing': 'stretch',
-                    'opacity': 0.8,
-                    'layer': 'above'
-                }],
-                'plot_bgcolor': '#fff',
-                'paper_bgcolor': '#fff'
-            }
-        }
-        return [
-            html.H3("Keywords/Phrases and Values"),
-            dash_table.DataTable(
-                id='table',
-                columns=[{'name': col, 'id': col} for col in df.columns],
-                data=df.to_dict('records')
-            ),
-            word_cloud_figure
-        ]
-    return '', {}
+        layout = {"xaxis": {"title": f"Top {top} Words in Job Description"}, "yaxis": {"title": "Number of Occurrences"}}
+
+        return go.Figure(data=data, layout=layout)
+
+    return ""
+
+
 
 
 if __name__ == '__main__':
