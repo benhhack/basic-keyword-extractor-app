@@ -12,6 +12,7 @@ app.layout = html.Div(
     style={'font-family': 'Arial, sans-serif', 'margin': '20px'},
     children=[
         html.H1(
+            id='header',
             children='Date vs Sales',
             style={'text-align': 'center', 'margin-bottom': '20px'}
         ),
