@@ -4,7 +4,7 @@
 . ./venv/bin/activate
 
 # run the test suite
-python -m pytest --webdriver firefox test_pink_morsel_visualizer.py
+python -m pytest --webdriver Firefox test_app_vis.py
 
 # collect exit code from pytest
 # exit code is 0 if all tests pass
