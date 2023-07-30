@@ -29,5 +29,5 @@ if __name__ == "__main__":
 
     pm_data = preprocessor.get_pink_morsels_data()
     print(pm_data)
-    pm_data.to_csv("data/preprocessed.csv")
+    pm_data.drop("index", axis=1).to_csv("data/preprocessed.csv")
 
