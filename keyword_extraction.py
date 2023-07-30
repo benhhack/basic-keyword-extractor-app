@@ -14,11 +14,14 @@ def get_keywords(text, top):
     kws = custom_kw_extr.extract_keywords(text)
     df = pd.DataFrame(kws)
 
-    df.rename({0:"keyword", 1:"value"}, axis=1, inplace=True)
+    df.rename({0:"Keyword", 1:"Value"}, axis=1, inplace=True)
 
     print(df)
 
-    df['count'] = df['keyword'].apply(calculate_word_frequencies)
+    freq = calculate_word_frequencies(text)
+    print(freq)
+    df['Count'] = df['Keyword'].apply(lambda x: freq[x])
+    print(df)
 
     return df
 
