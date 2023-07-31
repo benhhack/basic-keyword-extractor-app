@@ -179,7 +179,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Your Name - [@twitter_handle][linkedin-url] - benhhack@gmail.com
 
 Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
 
@@ -190,7 +190,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
+* [Quantium Virtual Experience](https://www.theforage.com/virtual-internships/prototype/jhiG2W9K8KLZK8nXP/Quantium:-Software-Engineering-Virtual-Experience-Program?ref=PsadgDZ2Bnb8Z5joN)
 * []()
 * []()
 
@@ -209,7 +209,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [issues-shield]: https://img.shields.io/github/issues/benhhack/basic-keyword-extractor-app.svg?style=for-the-badge
 [issues-url]: https://github.com/benhhack/basic-keyword-extractor-app/issues
 [license-shield]: https://img.shields.io/github/license/benhhack/basic-keyword-extractor-app.svg?style=for-the-badge
-[license-url]: https://github.com/benhhack/basic-keyword-extractor-app/blob/master/LICENSE.txt
+[license-url]: https://github.com/benhhack/basic-keyword-extractor-app/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/benjaminhhack
 [product-screenshot]: images/screenshot.png
