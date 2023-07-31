@@ -24,11 +24,10 @@
   <p align="center">
     A keyword extractor that my friends and I use for job applications.
     <br />
-    <a href="https://github.com/benhhack/basic-keyword-extractor-app"><strong>Explore the docs »</strong></a>
+    <!--<a href="https://github.com/benhhack/basic-keyword-extractor-app"><strong>Explore the docs »</strong></a>-->
     <br />
     <br />
-    <a href="https://github.com/benhhack/basic-keyword-extractor-app">View Demo</a>
-    ·
+    <!--<a href="https://github.com/benhhack/basic-keyword-extractor-app">View Demo</a>-->
     <a href="https://github.com/benhhack/basic-keyword-extractor-app/issues">Report Bug</a>
     ·
     <a href="https://github.combenhhack/basic-keyword-extractor-app/issues">Request Feature</a>
@@ -67,17 +66,21 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<!--[![Product Name Screen Shot][product-screenshot]](https://example.com)-->
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+After graduating from university, I went off applying for jobs. However, I found that I was not getting any interviews, never mind offers, despite a strong resume.
+I did some research and found out that most companies use AI to filter out resumes and, clearly, mine was not making the cut. 
+Consequently, I decided to create a keyword extractor to overcome this barrier. 
 
+I hope that anyone who is in this position can use this project effectively. If you're looking for a software dev role, contribute and add this project to your resume!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 ### Built With
 
-* Dash [dash-url]
+* [Dash] [dash-url]
+* [KeyBERT](https://github.com/MaartenGr/KeyBERT#:~:text=KeyBERT%20is%20a%20minimal%20and,post%20can%20be%20found%20here)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -86,12 +89,12 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Just install and run the project. Note that it is still very early stages and so is quite messy.
+Just install and run the project. Note that it is still very early stages and so it is very basic. WIll slowly improve and maintain alongside my job search.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
 * Python: see [this article](https://realpython.com/installing-python/) on Python installation
+* Firefox/Google Chrome for testing (default is Firefox)
 
 ### Installation
 
@@ -128,6 +131,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [ ] Make it prettier
 - [ ] Improve the keyword extractor
   - [ ] See ATS requirements and match it
+  - [ ] Increase customisability
 - [ ] Create a comparison function for resumes.
 - [ ] Update tests
 
@@ -158,7 +162,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [`LICENSE`][license-url] for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -167,7 +171,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [LinkedIn][linkedin-url] - benhhack@gmail.com
+Benjamin Hack - [LinkedIn][linkedin-url] - benhhack@gmail.com
 
 Project Link: [https://github.com/benhhack/basic-keyword-extractor-app](benhhack/basic-keyword-extractor-app)
 
