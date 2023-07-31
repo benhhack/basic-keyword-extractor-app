@@ -2,6 +2,8 @@ dash
 dash[testing]
 dash-bootstrap-components
 doc2text
+keybert
+keyphrase-vectorizers
 nltk
 pandas
 pdfminer
