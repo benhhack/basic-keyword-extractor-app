@@ -19,10 +19,10 @@
     <img src="images/logo.jpeg" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Basic Keyword Extractor</h3>
 
   <p align="center">
-    project_description
+    A keyword extractor that my friends and I use for job applications.
     <br />
     <a href="https://github.com/benhhack/basic-keyword-extractor-app"><strong>Explore the docs »</strong></a>
     <br />
