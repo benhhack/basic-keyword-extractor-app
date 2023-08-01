@@ -79,7 +79,7 @@ I hope that anyone who is in this position can use this project effectively. If 
 
 ### Built With
 
-* [Dash] [dash-url]
+* [Dash][dash-url]
 * [KeyBERT](https://github.com/MaartenGr/KeyBERT#:~:text=KeyBERT%20is%20a%20minimal%20and,post%20can%20be%20found%20here)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
