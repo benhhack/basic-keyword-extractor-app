@@ -20,6 +20,8 @@ def get_keywords(text, top):
 
     df.rename({0: "Keyword", 1: "Value"}, axis=1, inplace=True)
 
+    df.sort_values(by=["Value"], ascending=False, inplace=True)
+
     # freq = calculate_word_frequencies(text)
     # # print(freq)
     # df['Count'] = df['Keyword'].apply(lambda x: freq[x])
