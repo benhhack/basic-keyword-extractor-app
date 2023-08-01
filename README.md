@@ -126,7 +126,6 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [ ] Tabs for more visualizations
-  - [ ] Bar Chart
   - [ ] WordCloud
 - [ ] Make it prettier
 - [ ] Improve the keyword extractor
