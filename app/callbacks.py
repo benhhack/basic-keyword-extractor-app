@@ -1,4 +1,4 @@
-from dash import Input, Output
+from dash import Input, Output, State
 import dash_bootstrap_components as dbc
 from keyword_extraction import get_keywords
 
@@ -6,18 +6,18 @@ from keyword_extraction import get_keywords
 def get_callbacks(app):
     @app.callback(
         Output("df-table", "children"),
-        [
-            Input("textinp", "value"),
-            Input("top", "value")
-        ]
+        Input("gen-button", "n_clicks"),
+        State("textinp", "value"),
+        State("top", "value")
     )
-    def make_table(text, top):
+    def make_table(n_clicks, text, top):
         """
         :param text: the user input of the job description
         :param top: the top n keywords that a user wants
         :return: the table object ordered by most relevant
         """
-        if text and top:
+        if n_clicks and text and top:
             df = get_keywords(text, top)
             return dbc.Table.from_dataframe(df, striped=True, bordered=True, hover=True)
-
+        else:
+            return None
