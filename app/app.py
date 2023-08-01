@@ -14,18 +14,12 @@ app.layout = dbc.Container(
         dcc.Store(id="store"),
         html.H1("Keyword Extraction from Job Description"),
         html.Hr(),
-        dbc.Button(
-            "Generate review",
-            color="primary",
-            id="gen-button",
-            className="mb-3",
-            n_clicks=0
-        ),
+
 
         dbc.Row(
             [
-                dbc.Col(components.inputs, md=4),
-                dbc.Col(dbc.Table(id='df-table'), md=8)
+                dbc.Col([components.inputs, components.button], md=4),
+                dbc.Col(components.graph_tabs, md=8)
             ],
             align = 'centre'
         )
