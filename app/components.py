@@ -26,10 +26,9 @@ inputs = dbc.Card(
         html.Div(
             [
                 dbc.Label("Job Description"),
-                dbc.Input(
+                dbc.Textarea(
                     id='textinp',
                     value='Enter your text here...',
-                    type='text',
                     style={"height": "200px"}
                 )
             ]
