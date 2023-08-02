@@ -1,14 +1,16 @@
-from dash import Input, Output, State
+from dash import Input, Output, State, html
 import dash_bootstrap_components as dbc
 from keyword_extraction import get_keywords
+from create_wordcloud import make_cloud
+
+from io import BytesIO
+import base64
 
 
 def make_table(text, top):
     df = get_keywords(text, top)
     return dbc.Table.from_dataframe(df, striped=True, bordered=True, hover=True)
 
-def make_wordcloud(text):
-    pass
 
 def get_callbacks(app):
     @app.callback(
@@ -26,7 +28,7 @@ def get_callbacks(app):
             if active_tab == "table-tab":
                 return data["table"]
             elif active_tab == "wc-tab":
-                return data['wc']
+                return html.Img(src=data['wc'])
         return "Input your job description and number of keywords and press generate. "
 
     @app.callback(
@@ -46,7 +48,8 @@ def get_callbacks(app):
             # TODO: Make an alert
             return None
 
-        table = make_table(text, top)
+        img = BytesIO()
+        make_cloud(text).save(img, format='PNG')
 
         # wordcloud = make_wordcloud()
-        return {"table": table, "wc": None}
+        return {"table": make_table(text, top), "wc": 'data:image/png;base64,{}'.format(base64.b64encode(img.getvalue()).decode())}
